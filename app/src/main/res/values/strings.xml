@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Monty</string>
+    <string name="reset_button">Reset</string>
+    <string name = "play_button">Play</string>
+</resources>
