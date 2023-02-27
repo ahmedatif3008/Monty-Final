@@ -11,7 +11,7 @@ enum class Outcome {
     Ace
 }
 
-class Monty {
+class MontyModel {
     var isPlaying = false
     var flippedCard: Int? = null
     var assignment: Array<Outcome>? = null//array of card type
