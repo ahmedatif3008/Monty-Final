@@ -1,7 +1,11 @@
-package com.achaud16.monty.Monty
+package com.achaud16.monty.Monty.Fragments
+
 import android.animation.*
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.Button
@@ -10,7 +14,8 @@ import com.achaud16.monty.Monty.Model.MontyModel
 import com.achaud16.monty.Monty.Model.Outcome
 import com.achaud16.monty.R
 
-class MainActivity : AppCompatActivity() {
+
+class CardsFragment : Fragment() {
 
     private lateinit var bottomCard: ImageView
     private lateinit var middleCard: ImageView
@@ -31,29 +36,34 @@ class MainActivity : AppCompatActivity() {
     private val model = MontyModel();
     private lateinit var matchResult: Outcome;
 
-    companion object{
-        const val CARD_ANIMATION_DURATION = 500L;
-        const val NINETY = 90f;
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        val viewVar = inflater.inflate(R.layout.fragment_cards, container, false)
+        return viewVar
+
     }
+        //setContentView(R.layout.fragment_cards)
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        bottomCard = requireView().findViewById(R.id.Card1)
+        middleCard = requireView().findViewById(R.id.card2)
+        topCard = requireView().findViewById(R.id.card3)
 
-        bottomCard = findViewById(R.id.Card1)
-        middleCard = findViewById(R.id.card2)
-        topCard = findViewById(R.id.card3)
-
-        winnerImg = findViewById(R.id.winI)
-        loserImg = findViewById(R.id.lossI)
+        winnerImg = requireView().findViewById(R.id.winI)
+        loserImg = requireView().findViewById(R.id.lossI)
 
         winnerImg.alpha = 0.0f
         loserImg.alpha = 0.0f
 
 
 
-        startBtn = findViewById(R.id.button2)
+        startBtn = requireView().findViewById(R.id.button2)
         startBtn.isEnabled = true
 
         matchResult = Outcome.Blank
@@ -73,11 +83,11 @@ class MainActivity : AppCompatActivity() {
                 bottomCard.setOnClickListener(null)
                 middleCard.setOnClickListener(null)
 
-                val animatorL1 =ObjectAnimator.ofFloat(bottomCard, "scaleY", 1f, 0f).setDuration(500)
+                val animatorL1 = ObjectAnimator.ofFloat(bottomCard, "scaleY", 1f, 0f).setDuration(500)
 
 
 
-                val animatorL2 =ObjectAnimator.ofFloat(bottomCard, "scaleY", 0f, -1f).setDuration(500)
+                val animatorL2 = ObjectAnimator.ofFloat(bottomCard, "scaleY", 0f, -1f).setDuration(500)
 
                 animatorL1.interpolator = AccelerateInterpolator()
                 animatorL2.interpolator = AccelerateInterpolator()
@@ -110,11 +120,11 @@ class MainActivity : AppCompatActivity() {
                 bottomCard.setOnClickListener(null)
                 middleCard.setOnClickListener(null)
 
-                val animatorL3 =ObjectAnimator.ofFloat(topCard, "scaleY", 1f, 0f).setDuration(500)
+                val animatorL3 = ObjectAnimator.ofFloat(topCard, "scaleY", 1f, 0f).setDuration(500)
 
 
 
-                val animatorL4 =ObjectAnimator.ofFloat(topCard, "scaleY", 0f, -1f).setDuration(500)
+                val animatorL4 = ObjectAnimator.ofFloat(topCard, "scaleY", 0f, -1f).setDuration(500)
 
                 animatorL3.interpolator = AccelerateInterpolator()
                 animatorL4.interpolator = AccelerateInterpolator()
@@ -146,11 +156,11 @@ class MainActivity : AppCompatActivity() {
                 topCard.setOnClickListener(null)
                 bottomCard.setOnClickListener(null)
                 middleCard.setOnClickListener(null)
-                val animatorL5 =ObjectAnimator.ofFloat(middleCard, "scaleY", 1f, 0f).setDuration(500)
+                val animatorL5 = ObjectAnimator.ofFloat(middleCard, "scaleY", 1f, 0f).setDuration(500)
 
 
 
-                val animatorL6 =ObjectAnimator.ofFloat(middleCard, "scaleY", 0f, -1f).setDuration(500)
+                val animatorL6 = ObjectAnimator.ofFloat(middleCard, "scaleY", 0f, -1f).setDuration(500)
 
                 animatorL5.interpolator = AccelerateInterpolator()
                 animatorL6.interpolator = AccelerateInterpolator()
@@ -184,7 +194,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         //resetBtn.isEnabled = false
-        resetBtn = findViewById(R.id.button)
+        resetBtn = requireView().findViewById(R.id.button)
         resetBtn.isEnabled = false
         resetBtn.setOnClickListener{
             winnerImg.alpha = 0.0f
@@ -194,7 +204,23 @@ class MainActivity : AppCompatActivity() {
             resetBtn.isEnabled = false
             resetCards()
         }
+
+        //return viewVar
     }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = CardsFragment()
+
+    }
+
+
+
+
+
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//
+//    }
 
     private fun animateCards(){
         val cardWidth = middleCard.drawable.intrinsicWidth.toFloat()
@@ -210,11 +236,11 @@ class MainActivity : AppCompatActivity() {
             topCard.x = it.animatedValue as Float
         }
         animator.interpolator = LinearInterpolator()
-        animator.duration = CARD_ANIMATION_DURATION
+        animator.duration = 500L
         animator.start()
 
         animator2.interpolator = LinearInterpolator()
-        animator2.duration = CARD_ANIMATION_DURATION
+        animator2.duration = 500L
 
         animator2.start()
 
@@ -240,23 +266,17 @@ class MainActivity : AppCompatActivity() {
             topCard.x = it.animatedValue as Float
         }
         animator.interpolator = LinearInterpolator()
-        animator.duration = CARD_ANIMATION_DURATION
+        animator.duration = 500L
         animator.start()
 
         animator2.interpolator = LinearInterpolator()
-        animator2.duration = CARD_ANIMATION_DURATION
+        animator2.duration = 500L
 
         animator2.start()
 
     }
 
-    private fun flipCard(){
 
-    }
-
-    private fun winAnimation(){
-
-    }
 
 
     override fun onResume(){
@@ -266,4 +286,5 @@ class MainActivity : AppCompatActivity() {
             screenWidth = displayMetrics.widthPixels.toFloat()
         }
     }
+
 }
