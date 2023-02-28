@@ -1,6 +1,7 @@
 package com.achaud16.monty.Monty.Fragments
 
 import android.animation.*
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,11 +11,14 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.Button
 import android.widget.ImageView
+import com.achaud16.monty.Monty.Model.Account
 import com.achaud16.monty.Monty.Model.MontyModel
 import com.achaud16.monty.Monty.Model.Outcome
 import com.achaud16.monty.R
 
-
+interface GameInterface{
+    fun onGameResults(amount: Int);
+}
 class CardsFragment : Fragment() {
 
     private lateinit var bottomCard: ImageView
@@ -22,6 +26,8 @@ class CardsFragment : Fragment() {
     private lateinit var topCard: ImageView
 
 
+    private lateinit var callback: GameInterface
+    private lateinit var account: Account
 
     private lateinit var startBtn: Button
     private lateinit var resetBtn: Button
@@ -97,10 +103,12 @@ class CardsFragment : Fragment() {
                         super.onAnimationEnd(animation)
 
                         if (randArray[0] == Outcome.Blank){//model.wins(0) == false
+                            callback.onGameResults(-50)
                             bottomCard.setImageResource(R.drawable.blank)
                             loserImg.alpha = 1.0f
                         }
                         else{
+                            callback.onGameResults(50)
                             bottomCard.setImageResource(R.drawable.ace)
                             winnerImg.alpha = 1.0f
                         }
@@ -134,10 +142,12 @@ class CardsFragment : Fragment() {
                         super.onAnimationEnd(animation)
 
                         if (randArray[1] == Outcome.Blank){
+                            callback.onGameResults(-50)
                             loserImg.alpha = 1.0f
                             topCard.setImageResource(R.drawable.blank)
                         }
                         else{
+                            callback.onGameResults(50)
                             winnerImg.alpha = 0.0f
                             topCard.setImageResource(R.drawable.ace)
                         }
@@ -170,10 +180,12 @@ class CardsFragment : Fragment() {
                         super.onAnimationEnd(animation)
 
                         if (randArray[2] == Outcome.Blank){
+                            callback.onGameResults(-50)
                             loserImg.alpha = 1.0f
                             middleCard.setImageResource(R.drawable.blank)
                         }
                         else{
+                            callback.onGameResults(50)
                             winnerImg.alpha = 1.0f
                             middleCard.setImageResource(R.drawable.ace)
                         }
@@ -215,7 +227,10 @@ class CardsFragment : Fragment() {
     }
 
 
-
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = activity as GameInterface
+    }
 
 
 //    override fun onCreate(savedInstanceState: Bundle?) {

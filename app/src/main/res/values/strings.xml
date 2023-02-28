@@ -4,4 +4,12 @@
     <string name="play_button">Play</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="wCap">Wins:</string>
+    <string name="lCap">Losses:</string>
+    <string name="currCap">You currently have:</string>
+    <string name="currVal">num</string>
+    <string name="wVal">num</string>
+    <string name="lVal">num</string>
+
 </resources>
